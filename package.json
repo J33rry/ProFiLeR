@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.50.2",
+    "dotenv": "^17.0.0",
     "gsap": "^3.13.0",
     "next": "15.3.4",
     "next-view-transitions": "^0.3.4",

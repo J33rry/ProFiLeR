@@ -21,7 +21,7 @@ function page() {
                 ]}
                 currentPage="Info"
             />
-            <div className="ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8bg-green-400">
+            <div className="ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8 bg-green-400">
                 <div className="h-[200vh]">
                     <h1 className="text-4xl font-bold mb-4">Main Content</h1>
                     <p>This area scrolls independently of the sidebar.</p>
