@@ -6,7 +6,7 @@ import { useTransitionRouter } from "next-view-transitions";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function Navbar({ list, button, currentPage }) {
+function Navbar({ list, currentPage, ListIcons }) {
     const [activeSection, setActiveSection] = useState(null);
 
     useEffect(() => {
@@ -70,66 +70,92 @@ function Navbar({ list, button, currentPage }) {
         );
     }
     return (
-        <div className="relative">
-            <div className="fixed left-1 md:left-2 lg:left-5 top-0 bottom-0">
-                <div className="flex items-start flex-col min-h-screen gap-6 lg:gap-12 justify-center text-left">
-                    {list.map((item, index) => {
-                        const isActive = activeSection === item;
+        <div className="fixed top-0 h-[100vh] ml-2 lg:ml-4">
+            <div className="flex items-start flex-col h-screen gap-12 justify-center">
+                {list.map((item, index) => {
+                    const isActive = activeSection === item;
 
-                        return (
-                            <div
-                                key={index}
-                                className={`text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 cursor-pointer text-white  ${
-                                    isActive || currentPage === item
-                                        ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0 rounded-xl"
-                                        : "opacity-50 hover:opacity-80 hover:scale-105"
-                                }
+                    return (
+                        <div
+                            key={index}
+                            className={`hidden lg:flex gap-2 text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 cursor-pointer text-white items-center ${
+                                isActive || currentPage === item
+                                    ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0 rounded-xl"
+                                    : "opacity-50 hover:opacity-80 hover:scale-105"
+                            }
                             
-                                `}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    if (!currentPage) {
-                                        const section =
-                                            document.getElementById(item);
-                                        if (section) {
-                                            section.scrollIntoView({
-                                                behavior: "smooth",
-                                                block: "start",
-                                            });
-                                        }
-                                    } else {
-                                        const page = item.toLowerCase();
-                                        if (page === "home") {
-                                            router.push("/", {
-                                                onTransitionReady: slideInOut,
-                                            });
-                                        } else {
-                                            router.push(`/${page}`, {
-                                                onTransitionReady: slideInOut,
-                                            });
-                                        }
+                            `}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                if (!currentPage) {
+                                    const section =
+                                        document.getElementById(item);
+                                    if (section) {
+                                        section.scrollIntoView({
+                                            behavior: "smooth",
+                                            block: "start",
+                                        });
                                     }
-                                }}
-                            >
-                                {item}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-            <div className="fixed bottom-5 lg:bottom-10 right-5 lg:right-10">
-                <div
-                    className="flex items-center justify-center bg-zinc-500 text-white rounded-xl p-2 lg:rounded-2xl lg:p-4 border-1 border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300 z-10 cursor-pointer"
-                    onClick={() => {
-                        router.push("/dashboard", {
-                            onTransitionReady: slideInOut,
-                        });
-                    }}
-                >
-                    <div className="text-lg md:text-xl lg:text-2xl font-bold ">
-                        {button}
-                    </div>
-                </div>
+                                } else {
+                                    const page = item.toLowerCase();
+                                    if (page === "home") {
+                                        router.push("/", {
+                                            onTransitionReady: slideInOut,
+                                        });
+                                    } else {
+                                        router.push(`/${page}`, {
+                                            onTransitionReady: slideInOut,
+                                        });
+                                    }
+                                }
+                            }}
+                        >
+                            {ListIcons?.[index] || null}
+                            {item}
+                        </div>
+                    );
+                })}
+                {ListIcons?.map((Icon, index) => {
+                    const item = list[index];
+
+                    return (
+                        <div
+                            key={item}
+                            className={`block lg:hidden text-xl md:text-2xl font-bold transition-all duration-300 cursor-pointer text-white ${
+                                activeSection === item || currentPage === item
+                                    ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0 rounded-xl"
+                                    : "opacity-50 hover:opacity-80 hover:scale-105"
+                            }`}
+                            onClick={(e) => {
+                                e.preventDefault();
+
+                                if (!currentPage) {
+                                    const section =
+                                        document.getElementById(item);
+                                    if (section) {
+                                        section.scrollIntoView({
+                                            behavior: "smooth",
+                                            block: "start",
+                                        });
+                                    }
+                                } else {
+                                    const page = item.toLowerCase();
+                                    if (page === "home") {
+                                        router.push("/", {
+                                            onTransitionReady: slideInOut,
+                                        });
+                                    } else {
+                                        router.push(`/${page}`, {
+                                            onTransitionReady: slideInOut,
+                                        });
+                                    }
+                                }
+                            }}
+                        >
+                            {Icon}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
