@@ -1,8 +1,8 @@
 "use client";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Router, useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useTransitionRouter } from "next-view-transitions";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,7 +37,38 @@ function Navbar({ list, button, currentPage }) {
         };
     }, []);
 
-    const router = useRouter();
+    const router = useTransitionRouter();
+    function slideInOut() {
+        document.documentElement.animate(
+            [
+                { opacity: 1 },
+                {
+                    opacity: 0,
+                },
+            ],
+            {
+                duration: 1000,
+                easing: "cubic-bezier(.12,1,.88,.47)",
+                fill: "forwards",
+                pseudoElement: "::view-transition-old(root)",
+            }
+        );
+        document.documentElement.animate(
+            [
+                {
+                    clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
+                },
+                {
+                    clipPath: "polygon(100% 0, 0 0, 0 100%, 100% 100%)",
+                },
+            ],
+            {
+                duration: 1000,
+                easing: "cubic-bezier(.12,1,.88,.47)",
+                pseudoElement: "::view-transition-new(root)",
+            }
+        );
+    }
     return (
         <div className="relative">
             <div className="fixed left-1 md:left-2 lg:left-5 top-0 bottom-0">
@@ -55,7 +86,8 @@ function Navbar({ list, button, currentPage }) {
                                 }
                             
                                 `}
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e.preventDefault();
                                     if (!currentPage) {
                                         const section =
                                             document.getElementById(item);
@@ -68,9 +100,13 @@ function Navbar({ list, button, currentPage }) {
                                     } else {
                                         const page = item.toLowerCase();
                                         if (page === "home") {
-                                            router.push("/");
+                                            router.push("/", {
+                                                onTransitionReady: slideInOut,
+                                            });
                                         } else {
-                                            router.push(`/${page}`);
+                                            router.push(`/${page}`, {
+                                                onTransitionReady: slideInOut,
+                                            });
                                         }
                                     }
                                 }}
@@ -85,7 +121,9 @@ function Navbar({ list, button, currentPage }) {
                 <div
                     className="flex items-center justify-center bg-zinc-500 text-white rounded-xl p-2 lg:rounded-2xl lg:p-4 border-1 border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300 z-10 cursor-pointer"
                     onClick={() => {
-                        router.push("/dashboard");
+                        router.push("/dashboard", {
+                            onTransitionReady: slideInOut,
+                        });
                     }}
                 >
                     <div className="text-lg md:text-xl lg:text-2xl font-bold ">
