@@ -7,7 +7,7 @@ function UserForm({ AddForm, setAddForm }) {
     return (
         <div>
             {AddForm && (
-                <div className="h-[100vh] w-[100vw]">
+                <div className="fixed top-[35%] left-[50%]">
                     <AddUser setAddForm={setAddForm} />
                 </div>
             )}
