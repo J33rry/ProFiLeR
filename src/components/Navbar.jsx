@@ -47,7 +47,7 @@ function Navbar({ list, currentPage, ListIcons }) {
                 },
             ],
             {
-                duration: 1000,
+                duration: 500,
                 easing: "cubic-bezier(.12,1,.88,.47)",
                 fill: "forwards",
                 pseudoElement: "::view-transition-old(root)",
@@ -63,7 +63,7 @@ function Navbar({ list, currentPage, ListIcons }) {
                 },
             ],
             {
-                duration: 1000,
+                duration: 500,
                 easing: "cubic-bezier(.12,1,.88,.47)",
                 pseudoElement: "::view-transition-new(root)",
             }

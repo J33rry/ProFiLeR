@@ -36,7 +36,7 @@ body {
 }
 
 ::view-transition-new(root) {
-    z-index: 1000;
+    z-index: 20;
 }
 ::view-transition-old(root) {
     z-index: 10;
