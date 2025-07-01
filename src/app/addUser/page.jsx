@@ -1,39 +1,38 @@
 "use client";
-import React, { useRef, useState } from "react";
+import { SaveDataBase } from "@/util/SaveDataBase";
+import React, { useRef } from "react";
 
 function page() {
-    const UserRef = useRef(null);
-    const leetcodeRef = useRef(null);
-    const [user, setUser] = useState({ name: "", github: "", leetcode: "" });
+    const formRef = useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const github = await fetch(
-            `/api/github?username=${UserRef.current.value}`
-        );
-        const leetcode = await fetch(
-            `/api/leetcode?username=${leetcodeRef.current.value}`
-        );
-        const leetcodeData = await leetcode.json();
-        const githubData = await github.json();
-        console.log(githubData);
-        console.log(leetcodeData);
-        UserRef.current.value = "";
-        leetcodeRef.current.value = "";
+        const formData = new FormData(formRef.current);
+        const userData = Object.fromEntries(formData.entries());
+        SaveDataBase(userData);
     };
-
     return (
         <div>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4 "
+                ref={formRef}
+            >
                 <input
                     type="text"
-                    ref={UserRef}
+                    name="github_username"
                     placeholder="Enter GitHub username"
                 />
                 <input
                     type="text"
-                    ref={leetcodeRef}
+                    name="leetcode_username"
                     placeholder="Enter YOur Leetcode Username"
+                />
+                <input type="text" name="Name" placeholder="Name" />
+                <input
+                    type="text"
+                    placeholder="Your Portfolio URL"
+                    name="portfolio_url"
                 />
                 <button type="submit">Search</button>
             </form>
