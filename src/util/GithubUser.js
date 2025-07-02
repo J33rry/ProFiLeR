@@ -1,16 +1,16 @@
 import { supabase } from "@/lib/supabase";
+import { toast } from "react-toastify";
 
 export const GithubUser = async (username) => {
     if (!username) return "User Not Found";
 
     try {
-        // Step 1: Check if user exists on GitHub
         const github = await fetch(`/api/github?username=${username}`);
-        if (!github.ok) {
+        console.log("GitHub API Response:", github);
+        if (github.status === 404) {
             return "User Not Found";
         }
 
-        // Step 2: Check if user already exists in your Supabase DB
         const { data, error } = await supabase
             .from("Users")
             .select("github_username")
@@ -21,7 +21,6 @@ export const GithubUser = async (username) => {
             return "User Already Exists";
         }
 
-        // Step 3: Return GitHub API data
         const githubData = await github.json();
         return githubData;
     } catch (err) {

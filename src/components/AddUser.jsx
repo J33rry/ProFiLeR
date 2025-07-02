@@ -7,6 +7,10 @@ import AvatarUpload from "./AvatarUpload";
 import { LeetcodeUser } from "@/util/LeetcodeUser";
 import { GithubUser } from "@/util/GithubUser";
 import gsap from "gsap";
+import { toast } from "react-toastify";
+import { FaUserLarge } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
 
 function AddUser({ setAddForm, AddForm }) {
     const [file, setFile] = useState(null);
@@ -28,7 +32,26 @@ function AddUser({ setAddForm, AddForm }) {
             portfolio_url: PortfolioRef.current.value,
             avatar: file,
         };
-        SaveDataBase(userData, LeetcodeData, GithubData);
+        const { message } = await SaveDataBase(
+            userData,
+            LeetcodeData,
+            GithubData
+        );
+        if (message === "User and stats saved successfully") {
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <FaUserLarge />
+                    <span className="font-semibold">User added!</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
+            handleClose();
+        }
     };
 
     const LeetcodeUserCheck = async (username) => {
@@ -39,9 +62,33 @@ function AddUser({ setAddForm, AddForm }) {
         const user = await LeetcodeUser(username);
         if (user === "User Not Found") {
             setLeetcodeMessage("User Not Found");
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <SiLeetcode />
+                    <span className="font-semibold">User Not Found</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
             return;
         } else if (user === "User Already Exists") {
             setLeetcodeMessage("User Already Exists");
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <SiLeetcode />
+                    <span className="font-semibold">Already Register</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
             return;
         }
         setLeetcodeMessage("");
@@ -55,9 +102,33 @@ function AddUser({ setAddForm, AddForm }) {
         const user = await GithubUser(username);
         if (user === "User Not Found") {
             setGitMessage("User Not Found");
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <FaGithub />
+                    <span className="font-semibold">User Not Found</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
             return;
         } else if (user === "User Already Exists") {
             setGitMessage("User Already Exists");
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <FaGithub />
+                    <span className="font-semibold">Already Register</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
             return;
         }
         setGitMessage("");
@@ -117,8 +188,9 @@ function AddUser({ setAddForm, AddForm }) {
                     <input
                         type="text"
                         name="Name"
+                        required
                         placeholder="Name"
-                        className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300"
+                        className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white"
                         ref={NameRef}
                     />
                     <div className="flex items-center justify-center gap-2">
@@ -126,9 +198,10 @@ function AddUser({ setAddForm, AddForm }) {
                             type="text"
                             name="github_username"
                             id="github_id"
+                            required
                             placeholder="GitHub Username"
                             ref={GitRef}
-                            className={`border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 ${
+                            className={`border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white ${
                                 GitMessage ? "border-red-500" : "border-black"
                             } ${GithubData ? "border-green-400" : ""}
                             `}
@@ -141,9 +214,10 @@ function AddUser({ setAddForm, AddForm }) {
                         <input
                             type="text"
                             id="leetcode_id"
+                            required
                             name="leetcode_username"
                             placeholder="LeetCode Username"
-                            className={`border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 ${
+                            className={`border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white ${
                                 LeetcodeMessage
                                     ? "border-red-500"
                                     : "border-black"
@@ -159,12 +233,12 @@ function AddUser({ setAddForm, AddForm }) {
                         type="text"
                         placeholder="Your Portfolio URL"
                         name="portfolio_url"
-                        className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300"
+                        className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white"
                         ref={PortfolioRef}
                     />
                     <button
                         type="submit"
-                        className="flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 cursor-pointer text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-5 p-2 rounded-lg justify-center hover:scale-105"
+                        className="flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 cursor-pointer text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-4 lg:mt-5 p-2 py-4 rounded-lg justify-center hover:scale-105"
                     >
                         Search
                     </button>

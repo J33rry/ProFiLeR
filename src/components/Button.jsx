@@ -1,6 +1,7 @@
 "use client";
 import { useTransitionRouter } from "next-view-transitions";
 import React from "react";
+import { toast } from "react-toastify";
 
 function Button({
     button,
@@ -35,19 +36,6 @@ function Button({
             }
         );
     }
-    // const handleClose = () => {
-    //     gsap.to(formRef.current, {
-    //         opacity: 0,
-    //         scale: 0.8,
-    //         duration: 0.4,
-    //         ease: "back.in(1.7)",
-    //         onComplete: () => {
-    //             setAddForm(false);
-    //         },
-    //     });
-
-    //     setAddForm(false);
-    // };
     const handleClick = () => {
         if (link === "/addUser") {
             setAddForm(true);
