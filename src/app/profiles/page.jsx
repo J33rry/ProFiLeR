@@ -23,7 +23,7 @@ function page() {
                 currentPage="Profiles"
             />
             <div
-                className={`ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8 bg-red-200 ${
+                className={`ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8  ${
                     AddForm ? "blur-lg" : ""
                 }`}
             >

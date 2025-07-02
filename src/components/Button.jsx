@@ -1,9 +1,15 @@
 "use client";
 import { useTransitionRouter } from "next-view-transitions";
 import React from "react";
-import { IoPersonAddSharp } from "react-icons/io5";
 
-function Button({ button, link, buttonIcon, addForm, setAddForm }) {
+function Button({
+    button,
+    link,
+    buttonIcon,
+    addForm,
+    setAddForm,
+    handleClose,
+}) {
     const router = useTransitionRouter();
 
     function slideInOut() {
@@ -29,12 +35,24 @@ function Button({ button, link, buttonIcon, addForm, setAddForm }) {
             }
         );
     }
+    // const handleClose = () => {
+    //     gsap.to(formRef.current, {
+    //         opacity: 0,
+    //         scale: 0.8,
+    //         duration: 0.4,
+    //         ease: "back.in(1.7)",
+    //         onComplete: () => {
+    //             setAddForm(false);
+    //         },
+    //     });
 
+    //     setAddForm(false);
+    // };
     const handleClick = () => {
         if (link === "/addUser") {
             setAddForm(true);
-        } else if (button === "close") {
-            setAddForm(false);
+        } else if (button === "Close") {
+            handleClose();
             // router.push(link, { onTransitionReady: slideInOut });
         } else {
             router.push(link, { onTransitionReady: slideInOut });
@@ -60,9 +78,8 @@ function Button({ button, link, buttonIcon, addForm, setAddForm }) {
                 onClick={() => {
                     if (link === "/addUser") {
                         setAddForm(!addForm);
-                    } else if (button === "close") {
-                        setAddForm(false);
-                        router.push(link, { onTransitionReady: slideInOut });
+                    } else if (button === "Close") {
+                        handleClose();
                     } else {
                         router.push(link, { onTransitionReady: slideInOut });
                     }

@@ -23,8 +23,8 @@ function page() {
                 currentPage="Info"
             />
             <div
-                className={`ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8 bg-green-200 ${
-                    AddForm ? "blur-lg" : ""
+                className={`ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8 bg-green-400 ${
+                    AddForm ? "blur-md" : ""
                 }`}
             >
                 <div className="h-[200vh]">

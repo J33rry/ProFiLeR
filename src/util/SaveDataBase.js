@@ -1,20 +1,11 @@
 import { supabase } from "@/lib/supabase";
 
-export const SaveDataBase = async (userData) => {
-    const github = await fetch(
-        `/api/github?username=${userData.github_username}`
-    );
-    const leetcode = await fetch(
-        `/api/leetcode?username=${userData.leetcode_username}`
-    );
-    const leetcodeData = await leetcode.json();
-    const githubData = await github.json();
-
+export const SaveDataBase = async (userData, LeetcodeData, GithubData) => {
     const newUser = {
         name: userData.Name,
         github_username: userData.github_username,
         leetcode_username: userData.leetcode_username,
-        avatar_url: githubData.avatar_url,
+        avatar_url: GithubData.avatar_url,
         portfolio_url: userData.portfolio_url || "",
     };
 
@@ -61,13 +52,13 @@ export const SaveDataBase = async (userData) => {
 
     const userStats = {
         id: userID.data.id,
-        leetcode_ranking: leetcodeData.profile.ranking,
+        leetcode_ranking: LeetcodeData.profile.ranking,
         leetcode_problems_solved:
-            leetcodeData.submitStats.acSubmissionNum[0].count,
-        problem_easy: leetcodeData.submitStats.acSubmissionNum[1].count,
-        problem_medium: leetcodeData.submitStats.acSubmissionNum[2].count,
-        problem_hard: leetcodeData.submitStats.acSubmissionNum[3].count,
-        github_repos: githubData.public_repos,
+            LeetcodeData.submitStats.acSubmissionNum[0].count,
+        problem_easy: LeetcodeData.submitStats.acSubmissionNum[1].count,
+        problem_medium: LeetcodeData.submitStats.acSubmissionNum[2].count,
+        problem_hard: LeetcodeData.submitStats.acSubmissionNum[3].count,
+        github_repos: GithubData.public_repos,
     };
     const { error: statsError } = await supabase
         .from("user_stats")
