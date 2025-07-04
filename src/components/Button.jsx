@@ -1,7 +1,6 @@
 "use client";
 import { useTransitionRouter } from "next-view-transitions";
 import React from "react";
-import { toast } from "react-toastify";
 
 function Button({
     button,
@@ -41,7 +40,6 @@ function Button({
             setAddForm(true);
         } else if (button === "Close") {
             handleClose();
-            // router.push(link, { onTransitionReady: slideInOut });
         } else {
             router.push(link, { onTransitionReady: slideInOut });
         }

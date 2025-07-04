@@ -6,41 +6,45 @@ import { IoClose } from "react-icons/io5";
 import AvatarUpload from "./AvatarUpload";
 import { LeetcodeUser } from "@/util/LeetcodeUser";
 import { GithubUser } from "@/util/GithubUser";
+import { CodeforcesUser } from "@/util/CodeforcesUser";
 import gsap from "gsap";
 import { toast } from "react-toastify";
 import { FaUserLarge } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
+import { SiCodeforces, SiLeetcode } from "react-icons/si";
+import { BiError, BiLoader } from "react-icons/bi";
 
 function AddUser({ setAddForm, AddForm }) {
     const [file, setFile] = useState(null);
     const [LeetcodeData, setLeetcodeData] = useState(null);
     const [GithubData, setGithubData] = useState(null);
-    const [GitMessage, setGitMessage] = useState("");
-    const [LeetcodeMessage, setLeetcodeMessage] = useState("");
+    const [CodeforcesData, setCodeforcesData] = useState(null);
+    const [disabled, setDisabled] = useState(false);
     const GitRef = useRef(null);
     const LeetcodeRef = useRef(null);
     const NameRef = useRef(null);
-    const PortfolioRef = useRef(null);
+    const codeforcesRef = useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSaving(true);
         const userData = {
             Name: NameRef.current.value,
             github_username: GitRef.current.value,
             leetcode_username: LeetcodeRef.current.value,
-            portfolio_url: PortfolioRef.current.value,
+            codeforces_username: codeforcesRef.current.value,
             avatar: file,
         };
         const { message } = await SaveDataBase(
             userData,
             LeetcodeData,
-            GithubData
+            GithubData,
+            CodeforcesData
         );
         if (message === "User and stats saved successfully") {
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
-                    <FaUserLarge />
+                    <FaUserLarge className="text-green-500" />
                     <span className="font-semibold">User added!</span>
                 </div>,
                 {
@@ -50,18 +54,39 @@ function AddUser({ setAddForm, AddForm }) {
                     hideProgressBar: true,
                 }
             );
+            setSaving(false);
             handleClose();
+        } else {
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <FaUserLarge className="text-red-500" />
+                    <span className="font-semibold">Error Adding!!</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
         }
     };
 
     const LeetcodeUserCheck = async (username) => {
         if (username === "") {
-            setLeetcodeMessage("");
+            setLeetcodeData(null);
             return;
         }
+        if (username === LeetcodeData?.username) {
+            return;
+        }
+        setLeetcodeLoading(true);
+        setLeetcodeErr(false);
+        setDisabled(true);
         const user = await LeetcodeUser(username);
         if (user === "User Not Found") {
-            setLeetcodeMessage("User Not Found");
+            setLeetcodeLoading(false);
+            setLeetcodeErr(true);
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
                     <SiLeetcode />
@@ -76,7 +101,8 @@ function AddUser({ setAddForm, AddForm }) {
             );
             return;
         } else if (user === "User Already Exists") {
-            setLeetcodeMessage("User Already Exists");
+            setLeetcodeLoading(false);
+            setLeetcodeErr(true);
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
                     <SiLeetcode />
@@ -91,17 +117,80 @@ function AddUser({ setAddForm, AddForm }) {
             );
             return;
         }
-        setLeetcodeMessage("");
+        setLeetcodeLoading(false);
         setLeetcodeData(user);
+        setDisabled(false);
     };
+
+    const codeforcesUserCheck = async (username) => {
+        if (username === "") {
+            setCodeforcesData(null);
+            return;
+        }
+        if (username === CodeforcesData?.username) {
+            return;
+        }
+        setCodeforcesLoading(true);
+        setCodeforcesErr(false);
+        setDisabled(true);
+        const user = await CodeforcesUser(username);
+        console.log("Codeforces User:", user);
+        if (user === "User Not Found") {
+            setDisabled(true);
+            setCodeforcesLoading(false);
+            setCodeforcesErr(true);
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <SiCodeforces />
+                    <span className="font-semibold">User Not Found</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
+            return;
+        } else if (user === "User Already Exists") {
+            setDisabled(true);
+            setCodeforcesLoading(false);
+            setCodeforcesErr(true);
+            toast(
+                <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
+                    <SiCodeforces />
+                    <span className="font-semibold">Already Register</span>
+                </div>,
+                {
+                    className:
+                        "!bg-transparent !shadow-none !p-0 !m-0 border-none",
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                }
+            );
+            return;
+        }
+        setCodeforcesData(user);
+        setCodeforcesLoading(false);
+        setDisabled(false);
+    };
+
     const GithubUserCheck = async (username) => {
         if (username === "") {
-            setGitMessage("");
+            setGithubData(null);
             return;
         }
+        if (username === GithubData?.username) {
+            return;
+        }
+        setGitLoading(true);
+        setGitErr(false);
+        setDisabled(true);
         const user = await GithubUser(username);
         if (user === "User Not Found") {
-            setGitMessage("User Not Found");
+            setDisabled(true);
+            setGitLoading(false);
+            setGitErr(true);
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
                     <FaGithub />
@@ -116,7 +205,9 @@ function AddUser({ setAddForm, AddForm }) {
             );
             return;
         } else if (user === "User Already Exists") {
-            setGitMessage("User Already Exists");
+            setDisabled(true);
+            setGitLoading(false);
+            setGitErr(true);
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
                     <FaGithub />
@@ -131,8 +222,9 @@ function AddUser({ setAddForm, AddForm }) {
             );
             return;
         }
-        setGitMessage("");
         setGithubData(user);
+        setGitLoading(false);
+        setDisabled(false);
     };
     const formRef = useRef(null);
 
@@ -174,6 +266,16 @@ function AddUser({ setAddForm, AddForm }) {
             });
         }
     }, [AddForm]);
+
+    const [gitLoading, setGitLoading] = useState(false);
+    const [leetcodeLoading, setLeetcodeLoading] = useState(false);
+    const [codeforcesLoading, setCodeforcesLoading] = useState(false);
+    const [gitErr, setGitErr] = useState(false);
+    const [leetcodeErr, setLeetcodeErr] = useState(false);
+    const [codeforcesErr, setCodeforcesErr] = useState(false);
+
+    const [saving, setSaving] = useState(false);
+
     return (
         <div className="">
             <div
@@ -194,6 +296,16 @@ function AddUser({ setAddForm, AddForm }) {
                         ref={NameRef}
                     />
                     <div className="flex items-center justify-center gap-2">
+                        {gitLoading ? (
+                            <BiLoader className="text-white size-10 md:size-12 lg:size-14" />
+                        ) : (
+                            <div className="hidden"></div>
+                        )}
+                        {gitErr ? (
+                            <BiError className="text-red-600/50 size-10 md:size-12 lg:size-14" />
+                        ) : (
+                            <div className="hidden"></div>
+                        )}
                         <input
                             type="text"
                             name="github_username"
@@ -201,46 +313,69 @@ function AddUser({ setAddForm, AddForm }) {
                             required
                             placeholder="GitHub Username"
                             ref={GitRef}
-                            className={`border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white ${
-                                GitMessage ? "border-red-500" : "border-black"
-                            } ${GithubData ? "border-green-400" : ""}
-                            `}
+                            className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white"
                             onBlur={() => {
                                 GithubUserCheck(GitRef.current.value);
                             }}
                         />
                     </div>
                     <div className="flex items-center justify-center gap-2">
+                        {leetcodeLoading ? (
+                            <BiLoader className="text-white size-10 md:size-12 lg:size-14" />
+                        ) : (
+                            <div className="hidden"></div>
+                        )}
+                        {leetcodeErr ? (
+                            <BiError className="text-red-600/50 size-10 md:size-12 lg:size-14" />
+                        ) : (
+                            <div className="hidden"></div>
+                        )}
                         <input
                             type="text"
                             id="leetcode_id"
                             required
                             name="leetcode_username"
                             placeholder="LeetCode Username"
-                            className={`border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white ${
-                                LeetcodeMessage
-                                    ? "border-red-500"
-                                    : "border-black"
-                            } ${LeetcodeData ? "border-green-400" : ""} 
-                            `}
+                            className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white"
                             ref={LeetcodeRef}
                             onBlur={() => {
                                 LeetcodeUserCheck(LeetcodeRef.current.value);
                             }}
                         />
                     </div>
-                    <input
-                        type="text"
-                        placeholder="Your Portfolio URL"
-                        name="portfolio_url"
-                        className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white"
-                        ref={PortfolioRef}
-                    />
+                    <div className="flex items-center justify-center gap-2">
+                        {codeforcesLoading ? (
+                            <BiLoader className="text-white size-10 md:size-12 lg:size-14" />
+                        ) : (
+                            <div className="hidden"></div>
+                        )}
+                        {codeforcesErr ? (
+                            <BiError className="text-red-600/50 size-10 md:size-12 lg:size-14" />
+                        ) : (
+                            <div className="hidden"></div>
+                        )}
+                        <input
+                            type="text"
+                            required
+                            placeholder="CodeForces Username"
+                            name="codeforces_username"
+                            className="border-2 border-zinc-600/30 p-1 md:p-2 lg:p-3 rounded-xl shadow-2xl shadow-zinc-600/30 bg-white/80 w-full text-right active:outline-none focus:outline-none active:scale-105 focus:scale-105 transition-all duration-300 active:bg-white focus:bg-white"
+                            ref={codeforcesRef}
+                            onBlur={() => {
+                                codeforcesUserCheck(
+                                    codeforcesRef.current.value
+                                );
+                            }}
+                        />
+                    </div>
                     <button
                         type="submit"
-                        className="flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 cursor-pointer text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-4 lg:mt-5 p-2 py-4 rounded-lg justify-center hover:scale-105"
+                        className={`flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 cursor-pointer text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-4 lg:mt-5 p-2 py-4 rounded-lg justify-center hover:scale-105 disabled:bg-red-600/40 disabled:cursor-not-allowed ${
+                            saving ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                        disabled={disabled}
                     >
-                        Search
+                        Add User
                     </button>
                 </form>
             </div>

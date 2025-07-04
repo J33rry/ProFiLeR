@@ -39,35 +39,37 @@ function Navbar({ list, currentPage, ListIcons }) {
 
     const router = useTransitionRouter();
     function slideInOut() {
-        document.documentElement.animate(
-            [
-                { opacity: 1 },
+        requestAnimationFrame(() => {
+            document.documentElement.animate(
+                [
+                    { opacity: 1 },
+                    {
+                        opacity: 0,
+                    },
+                ],
                 {
-                    opacity: 0,
-                },
-            ],
-            {
-                duration: 500,
-                easing: "cubic-bezier(.12,1,.88,.47)",
-                fill: "forwards",
-                pseudoElement: "::view-transition-old(root)",
-            }
-        );
-        document.documentElement.animate(
-            [
+                    duration: 500,
+                    easing: "cubic-bezier(.12,1,.88,.47)",
+                    fill: "forwards",
+                    pseudoElement: "::view-transition-old(root)",
+                }
+            );
+            document.documentElement.animate(
+                [
+                    {
+                        clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
+                    },
+                    {
+                        clipPath: "polygon(100% 0, 0 0, 0 100%, 100% 100%)",
+                    },
+                ],
                 {
-                    clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
-                },
-                {
-                    clipPath: "polygon(100% 0, 0 0, 0 100%, 100% 100%)",
-                },
-            ],
-            {
-                duration: 500,
-                easing: "cubic-bezier(.12,1,.88,.47)",
-                pseudoElement: "::view-transition-new(root)",
-            }
-        );
+                    duration: 500,
+                    easing: "cubic-bezier(.12,1,.88,.47)",
+                    pseudoElement: "::view-transition-new(root)",
+                }
+            );
+        });
     }
     return (
         <div className="fixed top-0 h-[100vh] ml-2 lg:ml-4">

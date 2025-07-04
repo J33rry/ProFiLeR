@@ -5,20 +5,20 @@ import { RiHome9Fill } from "react-icons/ri";
 
 import { BiSolidDashboard } from "react-icons/bi";
 import { GiPlagueDoctorProfile } from "react-icons/gi";
-import { BsFillInfoSquareFill } from "react-icons/bs";
 import UserForm from "@/pages/UserForm";
+import { MdCompare } from "react-icons/md";
 
 function page() {
     const [AddForm, setAddForm] = useState(false);
     return (
         <div className="flex overflow-hidden">
             <Navbar
-                list={["Home", "Dashboard", "Profiles", "Info"]}
+                list={["Home", "Dashboard", "Profiles", "Compare"]}
                 ListIcons={[
                     <RiHome9Fill key="home" />,
                     <BiSolidDashboard key="dashboard" />,
                     <GiPlagueDoctorProfile key="profiles" />,
-                    <BsFillInfoSquareFill key="info" />,
+                    <MdCompare key="compare" />,
                 ]}
                 currentPage="Profiles"
             />

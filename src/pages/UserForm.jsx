@@ -14,7 +14,7 @@ function UserForm({ AddForm, setAddForm }) {
             )}
             {!AddForm && (
                 <Button
-                    button="Add New Profile"
+                    button="Add Profile"
                     link="/addUser"
                     buttonIcon={<MdGroupAdd />}
                     AddForm={AddForm}

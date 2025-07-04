@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 
 export const LeetcodeUser = async (username) => {
     const leetcode = await fetch(`/api/leetcode?username=${username}`);
-    if (leetcode.status !== 200) {
+    if (!leetcode.ok) {
         return "User Not Found";
     }
     const { data, error } = await supabase
