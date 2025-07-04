@@ -28,6 +28,9 @@ function AddUser({ setAddForm, AddForm }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSaving(true);
+        LeetcodeUserCheck(LeetcodeRef.current.value);
+        GithubUserCheck(GitRef.current.value);
+        codeforcesUserCheck(codeforcesRef.current.value);
         const userData = {
             Name: NameRef.current.value,
             github_username: GitRef.current.value,
@@ -134,7 +137,7 @@ function AddUser({ setAddForm, AddForm }) {
         setCodeforcesErr(false);
         setDisabled(true);
         const user = await CodeforcesUser(username);
-        console.log("Codeforces User:", user);
+        // console.log("Codeforces User:", user);
         if (user === "User Not Found") {
             setDisabled(true);
             setCodeforcesLoading(false);

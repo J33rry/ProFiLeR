@@ -7,6 +7,7 @@ import { BiSolidDashboard } from "react-icons/bi";
 import { GiPlagueDoctorProfile } from "react-icons/gi";
 import UserForm from "@/pages/UserForm";
 import { MdCompare } from "react-icons/md";
+import MainProfile from "./MainProfile";
 
 function page() {
     const [AddForm, setAddForm] = useState(false);
@@ -27,10 +28,7 @@ function page() {
                     AddForm ? "blur-lg" : ""
                 }`}
             >
-                <div className="h-[200vh]">
-                    <h1 className="text-4xl font-bold mb-4">Main Content</h1>
-                    <p>This area scrolls independently of the sidebar.</p>
-                </div>
+                <MainProfile />
             </div>
             <UserForm AddForm={AddForm} setAddForm={setAddForm} />
         </div>
