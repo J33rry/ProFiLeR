@@ -27,7 +27,7 @@ function RandomUser() {
     ];
     const [number, setNumber] = useState(0);
     useEffect(() => {
-        const random = Math.floor(Math.random() * 11);
+        const random = Math.floor(Math.random() * 10);
         setNumber(random);
     }, []);
 

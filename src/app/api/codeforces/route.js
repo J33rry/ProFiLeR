@@ -18,12 +18,6 @@ export async function GET(req) {
             { status: 404 }
         );
     }
-
-    // return new Response(JSON.stringify(userinfo), {
-    //     status: 200,
-    //     headers: { "Content-Type": "application/json" },
-    // });
-
     const res1 = await fetch(
         `https://codeforces.com/api/user.rating?handle=${username}`,
         {
