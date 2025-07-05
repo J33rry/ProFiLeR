@@ -18,7 +18,6 @@ export const CodeforcesUser = async (username) => {
             return "User Already Exists";
         }
         const codeforcesData = await codeforces.json();
-        // console.log("Codeforces API Response:", codeforcesData);
         return codeforcesData;
     } catch (err) {
         console.error("CodeforcesUser() error:", err);

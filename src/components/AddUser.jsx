@@ -13,6 +13,7 @@ import { FaUserLarge } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { SiCodeforces, SiLeetcode } from "react-icons/si";
 import { BiError, BiLoader } from "react-icons/bi";
+import { useData } from "@/context/Datacontext";
 
 function AddUser({ setAddForm, AddForm }) {
     const [file, setFile] = useState(null);
@@ -58,6 +59,7 @@ function AddUser({ setAddForm, AddForm }) {
                 }
             );
             setSaving(false);
+            refreshData();
             handleClose();
         } else {
             toast(
@@ -278,7 +280,7 @@ function AddUser({ setAddForm, AddForm }) {
     const [codeforcesErr, setCodeforcesErr] = useState(false);
 
     const [saving, setSaving] = useState(false);
-
+    const { refreshData } = useData();
     return (
         <div className="">
             <div
