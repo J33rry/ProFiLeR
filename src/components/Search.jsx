@@ -11,7 +11,7 @@ function Search({ setSearch, search }) {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (!searchRef.current.contains(event.target)) {
+            if (!searchRef.current.contains(event.target) && open) {
                 handleClose();
             }
         };
@@ -20,7 +20,7 @@ function Search({ setSearch, search }) {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [search]);
+    }, [open]);
     const handleClose = () => {
         gsap.to(searchRef.current, {
             opacity: 0,
@@ -28,35 +28,32 @@ function Search({ setSearch, search }) {
             duration: 0.4,
             ease: "back.in(1.7)",
             onComplete: () => {
+                gsap.set(searchRef.current, {
+                    display: "none",
+                    visibility: "hidden",
+                    pointerEvents: "none",
+                });
                 setOpen(false);
             },
         });
     };
 
     const handleclick = () => {
-        if (open) {
-            gsap.to(searchRef.current, {
-                opacity: 0,
-                scale: 0.8,
-                duration: 0.4,
-                ease: "back.in(1.7)",
-                onComplete: () => {
-                    setOpen(false);
-                },
-            });
-        } else {
-            setOpen(true);
+        setOpen(true);
 
-            gsap.to(searchRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.4,
-                ease: "back.out(1.7)",
-                onComplete: () => {
-                    inputRef.current.focus();
-                },
-            });
-        }
+        gsap.to(searchRef.current, {
+            display: "flex",
+            visibility: "visible",
+            pointerEvents: "auto",
+            zIndex: 10,
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: "back.out(1.7)",
+            onComplete: () => {
+                inputRef.current.focus();
+            },
+        });
     };
 
     const handleSearch = async () => {};
@@ -69,7 +66,7 @@ function Search({ setSearch, search }) {
                 <MdPersonSearch />
             </div>
             <div
-                className="absolute -bottom-14 md:-bottom-16 lg:-bottom-18 -right-2 opacity-0 scale-0 shadow-2xl backdrop-blur-lg bg-white/10 border border-white/30 flex w-[60vw] md:w-[50vw] lg:w-[40vw] items-center justify-end gap-4 px-3 py-1 lg:py-2 rounded-xl text-right text-2xl md:text-3xl lg:text-4xl z-10"
+                className={`-z-50 absolute -bottom-14 md:-bottom-16 lg:-bottom-18 -right-2 opacity-0 scale-0 shadow-2xl backdrop-blur-lg bg-white/10 border border-white/30 w-[60vw] md:w-[50vw] lg:w-[40vw] items-center justify-end gap-4 px-3 py-1 lg:py-2 rounded-xl text-right text-2xl md:text-3xl lg:text-4xl`}
                 ref={searchRef}
             >
                 <input

@@ -48,6 +48,7 @@ export async function GET(req) {
             description: repo.description,
             html_url: repo.html_url,
             langauge: repo.language,
+            homepage: repo.homepage,
         })),
     };
 

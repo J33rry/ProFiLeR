@@ -1,9 +1,69 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Lottie from "lottie-react";
 import githubAnim from "./github.json";
 import { FiMaximize } from "react-icons/fi";
+import Repos from "./Repos";
+import gsap from "gsap";
 
 function Github({ profile }) {
+    const [open, setOpen] = useState(false);
+    const repoRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!repoRef.current.contains(event.target) && open) {
+                handleClose();
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [open]);
+    const handleClose = () => {
+        gsap.to(repoRef.current, {
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.4,
+            ease: "back.in(1.7)",
+            onComplete: () => {
+                gsap.set(repoRef.current, {
+                    display: "none",
+                    visibility: "hidden",
+                    pointerEvents: "none",
+                });
+                setOpen(false);
+            },
+        });
+    };
+
+    const handleclick = () => {
+        setOpen(true);
+
+        const tl = gsap.timeline({
+            defaults: { ease: "power2.out", duration: 0.3 },
+        });
+
+        tl.set(repoRef.current, {
+            display: "flex",
+            visibility: "visible",
+            pointerEvents: "auto",
+            zIndex: 100,
+            opacity: 1,
+            scaleX: 0.2,
+            scaleY: 0,
+            transformOrigin: "50% 50%",
+        });
+
+        tl.to(repoRef.current, {
+            scaleX: 1,
+            duration: 0.3,
+        }).to(repoRef.current, {
+            scaleY: 1,
+            duration: 0.3,
+        });
+    };
+
     return (
         <div className="bg-white/30 rounded-xl p-0.5 md:p-3 lg:p-0.5 xl:p-3 shadow-md col-start-3 col-span-1 row-start-1 row-span-2 flex flex-col items-start justify-between">
             <div className="">
@@ -38,9 +98,18 @@ function Github({ profile }) {
                         <li key={i}>{repo.name}</li>
                     ))}
                 </ul>
-                <div className="absolute bottom-0 right-0 p-1 bg-white/40 rounded-lg m-1 hover:bg-white/60 transition-all border border-white/30 hover:shadow-md hover:shadow-black/20 cursor-pointer text-zinc-800">
+                <div
+                    className="absolute bottom-0 right-0 p-1 bg-white/40 rounded-lg m-1 hover:bg-white/60 transition-all border border-white/30 hover:shadow-md hover:shadow-black/20 cursor-pointer text-zinc-800"
+                    onClick={handleclick}
+                >
                     <FiMaximize className="size-4 md:size-5 lg:size-4 xl:size-5" />
                 </div>
+                <Repos
+                    open={open}
+                    setOpen={setOpen}
+                    profile={profile}
+                    repoRef={repoRef}
+                />
             </div>
         </div>
     );
