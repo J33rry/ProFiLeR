@@ -43,6 +43,7 @@ function AvatarUpload({ file, setFile }) {
                 <label htmlFor="avatar_id">
                     <div
                         className={`flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 cursor-pointer text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-5 p-2 rounded-lg hover:scale-105`}
+                        data-cursor
                     >
                         Upload Avatar
                     </div>

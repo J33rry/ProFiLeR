@@ -80,9 +80,9 @@ function Navbar({ list, currentPage, ListIcons }) {
                     return (
                         <div
                             key={index}
-                            className={`hidden lg:flex gap-2 text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 cursor-pointer text-white items-center ${
+                            className={`hidden lg:flex gap-2 text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 cursor-pointer text-white items-center rounded-xl ${
                                 isActive || currentPage === item
-                                    ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0 rounded-xl"
+                                    ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0"
                                     : "opacity-50 hover:opacity-80 hover:scale-105"
                             }
                             
@@ -111,6 +111,7 @@ function Navbar({ list, currentPage, ListIcons }) {
                                     }
                                 }
                             }}
+                            data-cursor
                         >
                             {ListIcons?.[index] || null}
                             {item}
@@ -153,6 +154,7 @@ function Navbar({ list, currentPage, ListIcons }) {
                                     }
                                 }
                             }}
+                            data-cursor
                         >
                             {Icon}
                         </div>

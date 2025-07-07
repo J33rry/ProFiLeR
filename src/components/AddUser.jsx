@@ -379,6 +379,7 @@ function AddUser({ setAddForm, AddForm }) {
                             saving ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                         disabled={disabled}
+                        data-cursor
                     >
                         Add User
                     </button>

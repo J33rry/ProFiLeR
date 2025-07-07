@@ -49,18 +49,19 @@ function Github({ profile }) {
             visibility: "visible",
             pointerEvents: "auto",
             zIndex: 100,
-            opacity: 1,
-            scaleX: 0.2,
-            scaleY: 0,
-            transformOrigin: "50% 50%",
+            opacity: 0.1,
+            scaleX: 0.1,
+            scaleY: 0.1,
+            transformOrigin: "80% 50%",
         });
 
         tl.to(repoRef.current, {
             scaleX: 1,
-            duration: 0.3,
+            duration: 0.2,
         }).to(repoRef.current, {
             scaleY: 1,
             duration: 0.3,
+            opacity: 1,
         });
     };
 
@@ -101,6 +102,7 @@ function Github({ profile }) {
                 <div
                     className="absolute bottom-0 right-0 p-1 bg-white/40 rounded-lg m-1 hover:bg-white/60 transition-all border border-white/30 hover:shadow-md hover:shadow-black/20 cursor-pointer text-zinc-800"
                     onClick={handleclick}
+                    data-cursor
                 >
                     <FiMaximize className="size-4 md:size-5 lg:size-4 xl:size-5" />
                 </div>

@@ -28,7 +28,7 @@ function page() {
                     AddForm ? "blur-sm" : ""
                 }`}
             >
-                <MainProfile />
+                <MainProfile AddForm={AddForm} setAddForm={setAddForm} />
             </div>
             <UserForm AddForm={AddForm} setAddForm={setAddForm} />
         </div>

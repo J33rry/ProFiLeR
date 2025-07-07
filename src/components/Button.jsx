@@ -51,6 +51,7 @@ function Button({
             <div
                 className="hidden lg:flex items-center justify-center bg-zinc-500 text-white rounded-xl p-2 lg:rounded-2xl lg:p-4 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300 cursor-pointer"
                 onClick={handleClick}
+                data-cursor
             >
                 <div className="text-lg md:text-xl lg:text-2xl font-bold flex items-center gap-2">
                     {buttonIcon}
@@ -70,6 +71,7 @@ function Button({
                         router.push(link, { onTransitionReady: slideInOut });
                     }
                 }}
+                data-cursor
             >
                 {buttonIcon}
             </div>

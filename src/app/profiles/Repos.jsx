@@ -5,7 +5,7 @@ import { GrDeploy } from "react-icons/gr";
 function Repos({ profile, repoRef }) {
     return (
         <div
-            className={`z-1000 fixed opacity-100 scale-0 shadow-2xl bg-[#151b22]/80 backdrop-blur-2xl text-[#eff6fc] border border-white/40 w-[100%] h-[100%] overflow-scroll flex flex-col right-0 top-0 p-2 md:p-4 rounded-xl overflow-x-hidden`}
+            className="z-1000 fixed opacity-100 scale-0 shadow-2xl bg-[#151b22]/80 backdrop-blur-2xl text-[#eff6fc] border border-white/40 w-[100%] h-[100%] overflow-scroll flex flex-col right-0 top-0 p-2 md:p-4 rounded-xl overflow-x-hidden"
             ref={repoRef}
         >
             {profile?.repos.map((repo, i) => (

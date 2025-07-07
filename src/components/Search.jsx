@@ -60,8 +60,9 @@ function Search({ setSearch, search }) {
     return (
         <div className="relative">
             <div
-                className="text-2xl text-zinc-300 md:text-3xl lg:text-4xl mr-4 md:mr-6 lg:mr-8 hover:cursor-pointer transition-all duration-300 p-1 rounded-lg bg-white/10 backdrop-blur-md hover:shadow-md hover:shadow-white/20 hover:text-white"
+                className="text-2xl text-zinc-300 md:text-3xl lg:text-4xl mr-4 md:mr-6 lg:mr-8 cursor-pointer transition-all duration-300 p-1 rounded-lg bg-white/10 backdrop-blur-md hover:shadow-md hover:shadow-white/20 hover:text-white"
                 onClick={handleclick}
+                data-cursor
             >
                 <MdPersonSearch />
             </div>

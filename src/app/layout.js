@@ -4,6 +4,7 @@ import { ViewTransitions } from "next-view-transitions";
 
 import { ToastContainer } from "react-toastify";
 import { DataProvider } from "@/context/Datacontext";
+import CustomCursor from "@/components/CustomCursor";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
+                    <CustomCursor />
                     <DataProvider>
                         {children}
 
