@@ -8,6 +8,7 @@ import { GiPlagueDoctorProfile } from "react-icons/gi";
 
 import UserForm from "@/pages/UserForm";
 import { MdCompare } from "react-icons/md";
+import MainCompare from "./MainCompare";
 
 function page() {
     const [AddForm, setAddForm] = useState(false);
@@ -24,14 +25,11 @@ function page() {
                 currentPage="Compare"
             />
             <div
-                className={`ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8 bg-green-400 ${
+                className={`ml-16 md:ml-20 lg:ml-56 flex-1 overflow-y-auto p-4 lg:p-8 ${
                     AddForm ? "blur-md" : ""
                 }`}
             >
-                <div className="h-[200vh]">
-                    <h1 className="text-4xl font-bold mb-4">Main Content</h1>
-                    <p>This area scrolls independently of the sidebar.</p>
-                </div>
+                <MainCompare />
             </div>
             <UserForm AddForm={AddForm} setAddForm={setAddForm} />
         </div>

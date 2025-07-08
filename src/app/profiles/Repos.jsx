@@ -17,18 +17,20 @@ function Repos({ profile, repoRef }) {
                         {repo.name}
                         <a
                             href={repo.html_url}
-                            className=""
+                            className="rounded-full p-1"
                             rel="noopener noreferrer"
                             target="_blank"
+                            data-cursor
                         >
                             <FaGithub />
                         </a>
                         {repo.homepage ? (
                             <a
                                 href={repo.homepage}
-                                className=""
+                                className="rounded-full p-1"
                                 rel="noopener noreferrer"
                                 target="_blank"
+                                data-cursor
                             >
                                 <GrDeploy />
                             </a>

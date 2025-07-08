@@ -1,33 +1,3 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-
-// export default function CustomCursor() {
-//     const [position, setPosition] = useState({ x: 0, y: 0 });
-
-//     useEffect(() => {
-//         const moveCursor = (e) => {
-//             setPosition({ x: e.clientX, y: e.clientY });
-//         };
-//         window.addEventListener("mousemove", moveCursor);
-//         return () => window.removeEventListener("mousemove", moveCursor);
-//     }, []);
-
-//     return (
-//         <div
-//             className="fixed top-0 left-0 z-[9999] pointer-events-none bg-white mix-blend-difference w-6 h-6 rounded-full"
-//             style={{
-//                 transform: `translate(${position.x}px, ${position.y}px)`,
-//             }}
-//         >
-//             <div
-//                 className="w-6 h-6 rounded-full "
-//                 style={{
-//                     transform: "translate(-50%, -50%)",
-//                 }}
-//             />
-//         </div>
-//     );
-// }
 "use client";
 import { useEffect, useRef, useState } from "react";
 
@@ -40,7 +10,21 @@ export default function CustomCursor() {
 
     useEffect(() => {
         const updateCursor = (e) => {
+            if (!cursorRef.current) return;
+
             if (targetRect) {
+                // Check if the target element still exists in the DOM
+                const targetElement = document.elementFromPoint(
+                    targetRect.left + targetRect.width / 2,
+                    targetRect.top + targetRect.height / 2
+                );
+
+                if (!targetElement || !targetElement.closest("[data-cursor]")) {
+                    // Element was removed, reset cursor
+                    setTargetRect(null);
+                    return;
+                }
+
                 setSnapping(true); // Enable transition
                 // Snap to element center
                 const x = targetRect.left + targetRect.width / 2;
@@ -79,14 +63,35 @@ export default function CustomCursor() {
             }
         };
 
+        const handleClick = () => {
+            // Reset cursor state on click to handle cases where elements are removed
+            setTimeout(() => {
+                if (targetRect) {
+                    const targetElement = document.elementFromPoint(
+                        targetRect.left + targetRect.width / 2,
+                        targetRect.top + targetRect.height / 2
+                    );
+
+                    if (
+                        !targetElement ||
+                        !targetElement.closest("[data-cursor]")
+                    ) {
+                        setTargetRect(null);
+                    }
+                }
+            }, 100); // Small delay to allow DOM updates
+        };
+
         window.addEventListener("mousemove", updateCursor);
         window.addEventListener("mouseover", handleMouseOver);
         window.addEventListener("mouseout", handleMouseOut);
+        window.addEventListener("click", handleClick);
 
         return () => {
             window.removeEventListener("mousemove", updateCursor);
             window.removeEventListener("mouseover", handleMouseOver);
             window.removeEventListener("mouseout", handleMouseOut);
+            window.removeEventListener("click", handleClick);
         };
     }, [targetRect]);
 
@@ -94,7 +99,7 @@ export default function CustomCursor() {
         <div
             ref={cursorRef}
             className={`hidden lg:flex fixed top-0 left-0 pointer-events-none z-[9999] bg-white mix-blend-difference ease-in-out ${
-                snapping ? "transition-all duration-200 ease-in-out" : ""
+                snapping ? "transition-all duration-400 ease-in-out" : ""
             }`}
         ></div>
     );

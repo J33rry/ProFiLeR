@@ -3,6 +3,7 @@ import "./globals.css";
 import { ViewTransitions } from "next-view-transitions";
 
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { DataProvider } from "@/context/Datacontext";
 import CustomCursor from "@/components/CustomCursor";
 
@@ -26,7 +27,7 @@ export default function RootLayout({ children }) {
         <ViewTransitions>
             <html lang="en">
                 <body
-                    className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                    className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none`}
                 >
                     <CustomCursor />
                     <DataProvider>

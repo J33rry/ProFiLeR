@@ -49,7 +49,7 @@ function Button({
         <div className="fixed bottom-5 lg:bottom-10 right-5 lg:right-10 z-10">
             {/* Large screens */}
             <div
-                className="hidden lg:flex items-center justify-center bg-zinc-500 text-white rounded-xl p-2 lg:rounded-2xl lg:p-4 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300 cursor-pointer"
+                className="hidden lg:flex items-center justify-center bg-zinc-500 text-white rounded-xl p-2 lg:rounded-2xl lg:p-4 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300"
                 onClick={handleClick}
                 data-cursor
             >
@@ -61,7 +61,7 @@ function Button({
 
             {/* Mobile screens */}
             <div
-                className="flex lg:hidden text-4xl bg-zinc-500 text-white rounded-xl p-2 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300 cursor-pointer"
+                className="flex lg:hidden text-4xl bg-zinc-500 text-white rounded-xl p-2 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300"
                 onClick={() => {
                     if (link === "/addUser") {
                         setAddForm(!addForm);

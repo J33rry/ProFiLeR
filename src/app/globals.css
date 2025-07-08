@@ -25,6 +25,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
     isolation: isolate;
+    cursor: none;
+}
+* {
+    cursor: none !important;
 }
 
 ::view-transition-new(root),

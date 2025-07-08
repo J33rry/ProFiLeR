@@ -1,15 +1,17 @@
 "use client";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useTransitionRouter } from "next-view-transitions";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function Navbar({ list, currentPage, ListIcons }) {
+function Navbar({ list = [], currentPage, ListIcons = [] }) {
     const [activeSection, setActiveSection] = useState(null);
 
     useEffect(() => {
+        if (!list || list.length === 0) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -24,21 +26,27 @@ function Navbar({ list, currentPage, ListIcons }) {
             }
         );
 
+        const elementsToObserve = [];
+
         list.forEach((id) => {
             const el = document.getElementById(id);
-            if (el) observer.observe(el);
+            if (el) {
+                observer.observe(el);
+                elementsToObserve.push(el);
+            }
         });
 
         return () => {
-            list.forEach((id) => {
-                const el = document.getElementById(id);
-                if (el) observer.unobserve(el);
+            elementsToObserve.forEach((el) => {
+                observer.unobserve(el);
             });
+            observer.disconnect();
         };
-    }, []);
+    }, [list]);
 
     const router = useTransitionRouter();
-    function slideInOut() {
+
+    const slideInOut = useCallback(() => {
         requestAnimationFrame(() => {
             document.documentElement.animate(
                 [
@@ -70,7 +78,7 @@ function Navbar({ list, currentPage, ListIcons }) {
                 }
             );
         });
-    }
+    }, []);
     return (
         <div className="fixed top-0 h-[100vh] ml-2 lg:ml-4">
             <div className="flex items-start flex-col h-screen gap-12 justify-center">
@@ -80,7 +88,7 @@ function Navbar({ list, currentPage, ListIcons }) {
                     return (
                         <div
                             key={index}
-                            className={`hidden lg:flex gap-2 text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 cursor-pointer text-white items-center rounded-xl ${
+                            className={`hidden lg:flex gap-2 text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 text-white items-center rounded-xl ${
                                 isActive || currentPage === item
                                     ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0"
                                     : "opacity-50 hover:opacity-80 hover:scale-105"
@@ -89,26 +97,30 @@ function Navbar({ list, currentPage, ListIcons }) {
                             `}
                             onClick={(e) => {
                                 e.preventDefault();
-                                if (!currentPage) {
-                                    const section =
-                                        document.getElementById(item);
-                                    if (section) {
-                                        section.scrollIntoView({
-                                            behavior: "smooth",
-                                            block: "start",
-                                        });
-                                    }
-                                } else {
-                                    const page = item.toLowerCase();
-                                    if (page === "home") {
-                                        router.push("/", {
-                                            onTransitionReady: slideInOut,
-                                        });
+                                try {
+                                    if (!currentPage) {
+                                        const section =
+                                            document.getElementById(item);
+                                        if (section) {
+                                            section.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "start",
+                                            });
+                                        }
                                     } else {
-                                        router.push(`/${page}`, {
-                                            onTransitionReady: slideInOut,
-                                        });
+                                        const page = item.toLowerCase();
+                                        if (page === "home") {
+                                            router.push("/", {
+                                                onTransitionReady: slideInOut,
+                                            });
+                                        } else {
+                                            router.push(`/${page}`, {
+                                                onTransitionReady: slideInOut,
+                                            });
+                                        }
                                     }
+                                } catch (error) {
+                                    console.error("Navigation error:", error);
                                 }
                             }}
                             data-cursor
@@ -124,34 +136,37 @@ function Navbar({ list, currentPage, ListIcons }) {
                     return (
                         <div
                             key={item}
-                            className={`block lg:hidden text-xl md:text-2xl font-bold transition-all duration-300 cursor-pointer text-white ${
+                            className={`block lg:hidden text-xl md:text-2xl font-bold transition-all duration-300 text-white ${
                                 activeSection === item || currentPage === item
                                     ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0 rounded-xl"
                                     : "opacity-50 hover:opacity-80 hover:scale-105"
                             }`}
                             onClick={(e) => {
                                 e.preventDefault();
-
-                                if (!currentPage) {
-                                    const section =
-                                        document.getElementById(item);
-                                    if (section) {
-                                        section.scrollIntoView({
-                                            behavior: "smooth",
-                                            block: "start",
-                                        });
-                                    }
-                                } else {
-                                    const page = item.toLowerCase();
-                                    if (page === "home") {
-                                        router.push("/", {
-                                            onTransitionReady: slideInOut,
-                                        });
+                                try {
+                                    if (!currentPage) {
+                                        const section =
+                                            document.getElementById(item);
+                                        if (section) {
+                                            section.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "start",
+                                            });
+                                        }
                                     } else {
-                                        router.push(`/${page}`, {
-                                            onTransitionReady: slideInOut,
-                                        });
+                                        const page = item.toLowerCase();
+                                        if (page === "home") {
+                                            router.push("/", {
+                                                onTransitionReady: slideInOut,
+                                            });
+                                        } else {
+                                            router.push(`/${page}`, {
+                                                onTransitionReady: slideInOut,
+                                            });
+                                        }
                                     }
+                                } catch (error) {
+                                    console.error("Navigation error:", error);
                                 }
                             }}
                             data-cursor

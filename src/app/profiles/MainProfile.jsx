@@ -9,7 +9,7 @@ import Codeforces from "./Codeforces";
 import Leetcode from "./Leetcode";
 import { FaUserAlt } from "react-icons/fa";
 
-function MainProfile({ AddForm, setAddForm }) {
+function MainProfile({ setAddForm }) {
     const { data } = useData();
     const [search, setSearch] = useState("");
     const handleClick = () => {
@@ -48,7 +48,7 @@ function MainProfile({ AddForm, setAddForm }) {
                 <Search setSearch={setSearch} search={search} />
             </div>
             <div
-                className="flex gap-2 bg-white/20 backdrop-blur-lg m-2 lg:m-4 p-1 md:p-3 lg:p-1 xl:p-3 rounded-2xl shadow-lg items-center justify-center text-2xl md:text-3xl lg:text-4xl cursor-pointer hover:shadow-lg hover:shadow-white/30 transition-all duration-300 text-zinc-300 hover:text-white"
+                className="flex gap-2 bg-white/20 backdrop-blur-lg m-2 lg:m-4 p-1 md:p-3 lg:p-1 xl:p-3 rounded-2xl shadow-lg items-center justify-center text-2xl md:text-3xl lg:text-4xl hover:shadow-lg hover:shadow-white/30 transition-all duration-300 text-zinc-300 hover:text-white"
                 onClick={handleClick}
                 data-cursor
             >
@@ -66,9 +66,6 @@ function MainProfile({ AddForm, setAddForm }) {
                         <div
                             key={profile.id}
                             className="grid grid-cols-3 md:grid-cols-[39%_20%_39%] lg:grid-cols-3 xl:grid-cols-[39%_20%_39%] grid-rows-3 gap-2 bg-white/20 backdrop-blur-lg p-1 md:p-3 lg:p-1 xl:p-3 rounded-2xl shadow-lg"
-                            // onClick={() => {
-                            //     console.log("Profile clicked:", profile);
-                            // }}
                         >
                             {/* Avatar */}
                             <div className="bg-white col-start-2 col-span-1 row-start-2 row-span-1 rounded-lg shadow-md">

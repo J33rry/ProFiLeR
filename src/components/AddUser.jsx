@@ -21,6 +21,16 @@ function AddUser({ setAddForm, AddForm }) {
     const [GithubData, setGithubData] = useState(null);
     const [CodeforcesData, setCodeforcesData] = useState(null);
     const [disabled, setDisabled] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [leetcodeLoading, setLeetcodeLoading] = useState(false);
+    const [leetcodeErr, setLeetcodeErr] = useState(false);
+    const [githubLoading, setGithubLoading] = useState(false);
+    const [githubErr, setGithubErr] = useState(false);
+    const [codeforcesLoading, setCodeforcesLoading] = useState(false);
+    const [codeforcesErr, setCodeforcesErr] = useState(false);
+
+    const { refreshData } = useData();
+
     const GitRef = useRef(null);
     const LeetcodeRef = useRef(null);
     const NameRef = useRef(null);
@@ -188,14 +198,14 @@ function AddUser({ setAddForm, AddForm }) {
         if (username === GithubData?.username) {
             return;
         }
-        setGitLoading(true);
-        setGitErr(false);
+        setGithubLoading(true);
+        setGithubErr(false);
         setDisabled(true);
         const user = await GithubUser(username);
         if (user === "User Not Found") {
             setDisabled(true);
-            setGitLoading(false);
-            setGitErr(true);
+            setGithubLoading(false);
+            setGithubErr(true);
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
                     <FaGithub />
@@ -211,8 +221,8 @@ function AddUser({ setAddForm, AddForm }) {
             return;
         } else if (user === "User Already Exists") {
             setDisabled(true);
-            setGitLoading(false);
-            setGitErr(true);
+            setGithubLoading(false);
+            setGithubErr(true);
             toast(
                 <div className="backdrop-blur-lg bg-white/10 border border-white/30 w-full h-full text-white px-3 py-4 md:px-2 lg:px-4 rounded-lg shadow-lg flex items-center gap-2 ml-20 mr-2 md:ml-12 lg:mx-0">
                     <FaGithub />
@@ -228,7 +238,7 @@ function AddUser({ setAddForm, AddForm }) {
             return;
         }
         setGithubData(user);
-        setGitLoading(false);
+        setGithubLoading(false);
         setDisabled(false);
     };
     const formRef = useRef(null);
@@ -272,15 +282,6 @@ function AddUser({ setAddForm, AddForm }) {
         }
     }, [AddForm]);
 
-    const [gitLoading, setGitLoading] = useState(false);
-    const [leetcodeLoading, setLeetcodeLoading] = useState(false);
-    const [codeforcesLoading, setCodeforcesLoading] = useState(false);
-    const [gitErr, setGitErr] = useState(false);
-    const [leetcodeErr, setLeetcodeErr] = useState(false);
-    const [codeforcesErr, setCodeforcesErr] = useState(false);
-
-    const [saving, setSaving] = useState(false);
-    const { refreshData } = useData();
     return (
         <div className="">
             <div
@@ -301,12 +302,12 @@ function AddUser({ setAddForm, AddForm }) {
                         ref={NameRef}
                     />
                     <div className="flex items-center justify-center gap-2">
-                        {gitLoading ? (
+                        {githubLoading ? (
                             <BiLoader className="text-white size-10 md:size-12 lg:size-14" />
                         ) : (
                             <div className="hidden"></div>
                         )}
-                        {gitErr ? (
+                        {githubErr ? (
                             <BiError className="text-red-600/50 size-10 md:size-12 lg:size-14" />
                         ) : (
                             <div className="hidden"></div>
@@ -375,7 +376,7 @@ function AddUser({ setAddForm, AddForm }) {
                     </div>
                     <button
                         type="submit"
-                        className={`flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 cursor-pointer text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-4 lg:mt-5 p-2 py-4 rounded-lg justify-center hover:scale-105 disabled:bg-red-600/40 disabled:cursor-not-allowed ${
+                        className={`flex gap-2 text-md md:text-lg lg:text-xl font-bold transition-all duration-300 text-white items-center bg-blue-800/70 hover:bg-blue-700 mt-4 lg:mt-5 p-2 py-4 rounded-lg justify-center hover:scale-105 disabled:bg-red-600/40 disabled:cursor-not-allowed ${
                             saving ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                         disabled={disabled}

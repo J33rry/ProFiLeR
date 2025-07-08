@@ -7,12 +7,20 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const fetchData = async () => {
-        setLoading(true);
-        const result = await GetData();
-        setData(result);
-        setLoading(false);
+        try {
+            setLoading(true);
+            setError(null);
+            const result = await GetData();
+            setData(result);
+        } catch (err) {
+            console.error("Error fetching data:", err);
+            setError(err.message || "Failed to fetch data");
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -20,7 +28,9 @@ export const DataProvider = ({ children }) => {
     }, []);
 
     return (
-        <DataContext.Provider value={{ data, loading, refreshData: fetchData }}>
+        <DataContext.Provider
+            value={{ data, loading, error, refreshData: fetchData }}
+        >
             {children}
         </DataContext.Provider>
     );

@@ -11,7 +11,11 @@ function Search({ setSearch, search }) {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (!searchRef.current.contains(event.target) && open) {
+            if (
+                searchRef.current &&
+                !searchRef.current.contains(event.target) &&
+                open
+            ) {
                 handleClose();
             }
         };
@@ -56,18 +60,17 @@ function Search({ setSearch, search }) {
         });
     };
 
-    const handleSearch = async () => {};
     return (
         <div className="relative">
             <div
-                className="text-2xl text-zinc-300 md:text-3xl lg:text-4xl mr-4 md:mr-6 lg:mr-8 cursor-pointer transition-all duration-300 p-1 rounded-lg bg-white/10 backdrop-blur-md hover:shadow-md hover:shadow-white/20 hover:text-white"
+                className="text-2xl text-zinc-300 md:text-3xl lg:text-4xl mr-4 md:mr-6 lg:mr-8 transition-all duration-300 p-1 rounded-lg bg-white/10 backdrop-blur-md hover:shadow-md hover:shadow-white/20 hover:text-white"
                 onClick={handleclick}
                 data-cursor
             >
                 <MdPersonSearch />
             </div>
             <div
-                className={`-z-50 absolute -bottom-14 md:-bottom-16 lg:-bottom-18 -right-2 opacity-0 scale-0 shadow-2xl backdrop-blur-lg bg-white/10 border border-white/30 w-[60vw] md:w-[50vw] lg:w-[40vw] items-center justify-end gap-4 px-3 py-1 lg:py-2 rounded-xl text-right text-2xl md:text-3xl lg:text-4xl`}
+                className="-z-50 absolute -bottom-14 md:-bottom-16 lg:-bottom-18 -right-2 opacity-0 scale-0 shadow-2xl backdrop-blur-lg bg-white/10 border border-white/30 w-[60vw] md:w-[50vw] lg:w-[40vw] items-center justify-end gap-4 px-3 py-1 lg:py-2 rounded-xl text-right text-2xl md:text-3xl lg:text-4xl"
                 ref={searchRef}
             >
                 <input
@@ -79,10 +82,7 @@ function Search({ setSearch, search }) {
                     }}
                     ref={inputRef}
                 />
-                <button
-                    onClick={handleSearch}
-                    className="text-2xl text-zinc-300 md:text-3xl lg:text-4xl  hover:cursor-pointer transition-all duration-300 p-1 rounded-lg bg-white/10 backdrop-blur-md hover:shadow-md hover:shadow-white/20 hover:text-white "
-                >
+                <button className="text-2xl text-zinc-300 md:text-3xl lg:text-4xl transition-all duration-300 p-1 rounded-lg bg-white/10 backdrop-blur-md hover:shadow-md hover:shadow-white/20 hover:text-white ">
                     <BiSearch />
                 </button>
             </div>

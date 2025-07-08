@@ -92,7 +92,7 @@ function Codeforces({ profile }) {
                     ))}
                 </div>
                 <div
-                    className="absolute bottom-0 right-0 p-1 bg-white/40 rounded-lg m-1 hover:bg-white/60 transition-all border border-white/30 hover:shadow-md hover:shadow-black/20 cursor-pointer text-zinc-300"
+                    className="absolute bottom-0 right-0 p-1 bg-white/40 rounded-lg m-1 hover:bg-white/60 transition-all border border-white/30 hover:shadow-md hover:shadow-black/20 text-zinc-300"
                     onClick={handleclick}
                     data-cursor
                 >
