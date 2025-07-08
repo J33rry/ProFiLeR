@@ -49,6 +49,8 @@ export async function GET(req) {
             html_url: repo.html_url,
             langauge: repo.language,
             homepage: repo.homepage,
+            stargazers_count: repo.stargazers_count,
+            forks_count: repo.forks_count,
         })),
     };
 

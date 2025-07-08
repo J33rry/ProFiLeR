@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FaCross, FaPlus } from "react-icons/fa";
-import { MdCompare, MdOutlineClose } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
+import { MdCompare } from "react-icons/md";
 import SearchBar from "./SearchBar";
 import { useData } from "@/context/Datacontext";
 import CompareUser from "./CompareUser";
