@@ -41,6 +41,7 @@ export async function GET(req) {
         name: userinfo.name,
         avatar_url: userinfo.avatar_url,
         bio: userinfo.bio,
+        followers: userinfo.followers,
 
         public_repos: userinfo.public_repos,
         repos: repos.map((repo) => ({
