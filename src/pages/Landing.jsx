@@ -93,7 +93,7 @@ function Landing() {
                 <div className="absolute inset-0 pointer-events-none z-0">
                     <div className="w-full h-full bg-gradient-to-tr from-pink-500/10 via-purple-700/10 to-blue-500/10 blur-2xl animate-pulse" />
                 </div>
-                <h1 className="relative z-10 text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg">
+                <h1 className="relative z-10 text-5xl md:text-7xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg font-plus-jakarta-sans">
                     Welcome to <span className="text-pink-400">Profiler</span>
                 </h1>
                 <p className="relative z-10 text-lg md:text-2xl max-w-3xl mb-6 text-white/90 leading-relaxed">

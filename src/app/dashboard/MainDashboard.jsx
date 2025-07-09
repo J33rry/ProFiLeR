@@ -123,7 +123,7 @@ function MainDashboard() {
         <div className="border-2 border-zinc-500 rounded-2xl border-l-0 min-h-[90vh] rounded-l-md">
             {/* Header */}
             <div className="flex justify-between items-center mx-2 lg:mx-4 p-2 mt-4 lg:mt-8 bg-gradient-to-l from-zinc-300/40 to-zinc-300/0 rounded-2xl">
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest flex items-center gap-3">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest flex items-center gap-3 font-plus-jakarta-sans">
                     Dashboard :
                     <BiSolidDashboard />
                 </h1>
