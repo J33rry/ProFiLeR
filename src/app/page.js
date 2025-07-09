@@ -18,6 +18,7 @@ import {
     SiCodeforces,
 } from "react-icons/si";
 import { GiRamProfile } from "react-icons/gi";
+import { GrGallery, GrTechnology } from "react-icons/gr";
 
 export default function Home() {
     return (
@@ -80,11 +81,21 @@ export default function Home() {
 
             {/* <CustomCursor /> */}
             <Navbar
-                list={["Home", "Features", "Working", "Why_Us", "Contact_Us"]}
+                list={[
+                    "Home",
+                    "Features",
+                    "Gallery",
+                    "Working",
+                    "Technology",
+                    "Why_Us",
+                    "Contact_Us",
+                ]}
                 ListIcons={[
                     <RiHome9Fill key="Home" />,
                     <FaSuperpowers key="Features" />,
+                    <GrGallery key="Gallery" />,
                     <SiPaloaltonetworks key="Working" />,
+                    <GrTechnology key="Technology" />,
                     <SiTrustpilot key="Why_Us" />,
                     <RiContactsFill key="Contact_Us" />,
                 ]}

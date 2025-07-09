@@ -104,12 +104,16 @@ function Landing() {
                     edge with advanced analytics and beautiful visualizations.
                 </p>
                 <div className="relative z-10 flex flex-col sm:flex-row gap-4 mb-8">
-                    <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 px-12 rounded-full shadow-xl text-xl transition duration-300">
+                    <button
+                        className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 px-12 rounded-full shadow-xl text-xl transition duration-300"
+                        data-cursor
+                        onClick={() => {}}
+                    >
                         Get Started Free
                     </button>
-                    <button className="bg-transparent border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white font-bold py-4 px-12 rounded-full transition duration-300">
+                    {/* <button className="bg-transparent border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white font-bold py-4 px-12 rounded-full transition duration-300">
                         View Demo
-                    </button>
+                    </button> */}
                 </div>
                 <div className="relative z-10 flex items-center gap-6 text-white/70">
                     <div className="flex items-center gap-2">
@@ -599,6 +603,7 @@ function Landing() {
                     <a
                         href="mailto:hello@profiler.com"
                         className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg"
+                        data-cursor
                     >
                         Contact Us
                     </a>
@@ -607,6 +612,7 @@ function Landing() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-transparent border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white font-bold py-3 px-8 rounded-full transition duration-300"
+                        data-cursor
                     >
                         Star on GitHub
                     </a>
