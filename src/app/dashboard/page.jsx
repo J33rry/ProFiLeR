@@ -16,7 +16,7 @@ import {
     FaUserPlus,
 } from "react-icons/fa";
 import { SiLeetcode, SiCodeforces } from "react-icons/si";
-import UserForm from "@/pages/UserForm";
+import UserForm from "@/components/UserForm";
 import MainDashboard from "./MainDashboard";
 
 function Page() {

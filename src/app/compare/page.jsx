@@ -14,7 +14,7 @@ import { SiLeetcode, SiCodeforces } from "react-icons/si";
 import { RiHome9Fill } from "react-icons/ri";
 import { GiPlagueDoctorProfile } from "react-icons/gi";
 
-import UserForm from "@/pages/UserForm";
+import UserForm from "@/components/UserForm";
 import { MdCompare } from "react-icons/md";
 import MainCompare from "./MainCompare";
 import { BiSolidDashboard } from "react-icons/bi";

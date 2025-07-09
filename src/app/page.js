@@ -2,7 +2,7 @@
 import Button from "@/components/Button";
 
 import Navbar from "@/components/Navbar";
-import Landing from "@/pages/landing";
+import Landing from "@/components/Landing";
 import { RiContactsFill, RiHome9Fill } from "react-icons/ri";
 import {
     FaSuperpowers,
