@@ -47,21 +47,16 @@ function Button({
 
     return (
         <div className="fixed bottom-5 lg:bottom-10 right-5 lg:right-10 z-10">
-            {/* Large screens */}
-            <div
-                className="hidden lg:flex items-center justify-center bg-zinc-500 text-white rounded-xl p-2 lg:rounded-2xl lg:p-4 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300"
+            <button
                 onClick={handleClick}
+                className="hidden lg:flex items-center gap-2 rounded-full bg-zinc-800 px-6 py-3 font-semibold text-white shadow-lg shadow-zinc-800/20 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-zinc-700 hover:shadow-xl hover:shadow-zinc-800/30 active:scale-100"
                 data-cursor
             >
-                <div className="text-lg md:text-xl lg:text-2xl font-bold flex items-center gap-2">
-                    {buttonIcon}
-                    {button}
-                </div>
-            </div>
-
-            {/* Mobile screens */}
+                {buttonIcon}
+                <span className="text-lg">{button}</span>
+            </button>
             <div
-                className="flex lg:hidden text-4xl bg-zinc-500 text-white rounded-xl p-2 border border-zinc-600 shadow-lg/30 shadow-zinc-500 hover:shadow-lg/50 transition-all duration-300 hover:bg-zinc-600 hover:scale-105 hover:text-zinc-300"
+                className="flex lg:hidden items-center gap-2 rounded-full bg-zinc-800 px-6 py-3 font-semibold text-white shadow-lg shadow-zinc-800/20 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-zinc-700 hover:shadow-xl hover:shadow-zinc-800/30 active:scale-100"
                 onClick={() => {
                     if (link === "/addUser") {
                         setAddForm(!addForm);

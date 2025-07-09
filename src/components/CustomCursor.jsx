@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function CustomCursor() {
     const cursorRef = useRef(null);
@@ -7,7 +8,6 @@ export default function CustomCursor() {
     const [borderRadius, setBorderRadius] = useState("20px");
 
     const [snapping, setSnapping] = useState(false);
-
     useEffect(() => {
         const updateCursor = (e) => {
             if (!cursorRef.current) return;

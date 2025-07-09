@@ -58,6 +58,10 @@ function MainDashboard() {
         .sort((a, b) => (b.followers || 0) - (a.followers || 0))
         .slice(0, 5);
 
+    // const githubLeaderboard = data
+    //     .sort((a, b) => a.followers - b.followers)
+    //     .slice(0, 5);
+
     // Codeforces Rank Distribution
     const rankCounts = data?.reduce((acc, user) => {
         const rank = user.codeforces_rank || "Unranked";

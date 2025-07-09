@@ -80,7 +80,7 @@ function Navbar({ list = [], currentPage, ListIcons = [] }) {
         });
     }, []);
     return (
-        <div className="fixed top-0 h-[100vh] ml-2 lg:ml-4">
+        <div className="fixed transition-all opacity-70 top-0 h-[100vh] ml-2 lg:ml-4">
             <div className="flex items-start flex-col h-screen gap-12 justify-center">
                 {list.map((item, index) => {
                     const isActive = activeSection === item;
@@ -90,8 +90,8 @@ function Navbar({ list = [], currentPage, ListIcons = [] }) {
                             key={index}
                             className={`hidden lg:flex gap-2 text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 text-white items-center rounded-xl ${
                                 isActive || currentPage === item
-                                    ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0"
-                                    : "opacity-50 hover:opacity-80 hover:scale-105"
+                                    ? "scale-125 ml-10 pl-2 bg-gradient-to-r from-white/10 to-white/0"
+                                    : "opacity-50 hover:opacity-80 hover:scale-105 "
                             }
                             
                             `}
@@ -130,15 +130,15 @@ function Navbar({ list = [], currentPage, ListIcons = [] }) {
                         </div>
                     );
                 })}
-                {ListIcons?.map((Icon, index) => {
-                    const item = list[index];
+                {list.map((item, index) => {
+                    const isActive = activeSection === item;
 
                     return (
                         <div
-                            key={item}
-                            className={`block lg:hidden text-xl md:text-2xl font-bold transition-all duration-300 text-white ${
-                                activeSection === item || currentPage === item
-                                    ? "scale-110 pl-5 bg-gradient-to-r from-white/10 to-white/0 rounded-xl"
+                            key={index}
+                            className={`block lg:hidden text-md md:text-lg lg:text-2xl font-bold transition-all duration-300 text-white items-center rounded-xl ${
+                                isActive || currentPage === item
+                                    ? "scale-110 ml-5 pl-2  bg-gradient-to-r from-white/10 to-white/0"
                                     : "opacity-50 hover:opacity-80 hover:scale-105"
                             }`}
                             onClick={(e) => {
@@ -171,7 +171,7 @@ function Navbar({ list = [], currentPage, ListIcons = [] }) {
                             }}
                             data-cursor
                         >
-                            {Icon}
+                            {ListIcons?.[index] || null}
                         </div>
                     );
                 })}

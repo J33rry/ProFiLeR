@@ -283,9 +283,9 @@ function AddUser({ setAddForm, AddForm }) {
     }, [AddForm]);
 
     return (
-        <div className="">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[999]">
             <div
-                className="flex items-center justify-center p-5 md:p-15 lg:p-20 z-20 rounded-lg shadow-2xl backdrop-blur-lg bg-white/10 border border-white/30 opacity-0 scale-90"
+                className="flex items-center justify-center p-5 md:p-15 lg:p-20 z-[9999] rounded-lg shadow-2xl backdrop-blur-lg bg-white/10 border border-white/30 opacity-0 scale-90 "
                 ref={formRef}
             >
                 <form
